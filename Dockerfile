@@ -1,4 +1,4 @@
-FROM spotify/kafka
+FROM ubuntu:trusty
 
 RUN apt-get install python -y
 
