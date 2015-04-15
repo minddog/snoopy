@@ -5,7 +5,7 @@ machine:
 dependencies:
   override:
     - docker info
-    - docker build -t spotify/kafka kafka/
+    - docker build -t spotify/kafka .
 
 test:
   override:
