@@ -16,6 +16,7 @@ setup(
     description = ("Snoopy sleeps on his house."),
     license = "Mine",
     keywords = "house sleepy snoopy better-than-the-flintstones",
+    setup_requires=['nose>=1.0'],
     packages=['snoopy', 'tests'],
     long_description=read('README')
 )
