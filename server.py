@@ -1,6 +1,9 @@
-import time
+from flask import Flask, jsonify
+app = Flask(__name__)
 
-# Quick Test to setup docker container
-while True:
-	print "yes"
-	time.sleep(1)
+@app.route("/info")
+def info():
+    return jsonify(status="Alive!")
+
+if __name__ == "__main__":
+    app.run()

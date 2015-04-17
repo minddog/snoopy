@@ -10,5 +10,5 @@ RUN cd /data
 RUN sudo pip install virtualenv
 RUN virtualenv /data/.venv
 RUN source venv/bin/activate; python setup.py install
-EXPOSE  8080
+EXPOSE  5000
 CMD ["python", "server.py"]
