@@ -12,4 +12,4 @@ RUN virtualenv /data/.venv
 RUN /data/.venv/bin/pip install -r requirements.txt
 RUN /data/.venv/bin/python setup.py install 
 EXPOSE  5000
-CMD ["/data/.venv/bin/python", "server.py"]
+CMD ["/data/.venv/bin/snoopyd"]
