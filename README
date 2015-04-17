@@ -1,1 +1,40 @@
-A really long description of this project.
+Snoopyd
+               -_______
+              /        \
+  ___________/   --     |
+ /|                     |
+|``               |     |  
+ \________________|     |
+                  \_____|
+The architecture for snoopy is that of a generic data-pipeline system. It contains a plugin system that registers publishers, subscribers, and allows subscribers to enumerate through pluggable storage engines to push the data. The system does not depend on a single technology, but is meant to be compliant with the competitive market for pubsub systems.
+
+This project is meant to empower and create leverage for engineers around the world to stop reinventing the fundamental data pipeline mechanics and allow them to plumb in their applications without much upfront effort on their infrastructure or software development time.
+
+How it works?
+ Say for instance, you are building a real estate application for an agent. You want to provide the latest house listings for sale. The data changes multiple times a data, everyday. Instead of relying on hourly activities, you can make it realtime by setting up a consumer of the zillow stream.
+ [code snippet]
+	from snoopy import sub
+	zillow_stream = sub.consume('zillow-live-data')
+	zillow_stream.webhook('http://localhost:5000')
+ [/code snippet]
+
+ Another example:
+ You are Zendesk, and you need to allow third-party application developers access to your event data on customer support tickets. You write the following code to enable third-party access to an existing stream.
+
+ [code snippet]
+    from snoopy import pub
+	from flask import Flask, jsonify
+	app = Flask(__name__)
+
+	def grant_customer_access(cust_id, signature):
+		return pub.create_authorized_stream('zendesk', signature, filter=('select * from zendesk_stream where customer_id={}'.format(cust_id))
+
+	# Get Access to zendesk-stream
+	@app.route("/zendesk-stream/access")
+	def stream_request():
+		secret = app.request.args('secret')
+		stream_info = grant_customer_access(5, pub.sign_secret(secret))
+		return jsonify(stream_info)
+ [/code snippet]
+
+
