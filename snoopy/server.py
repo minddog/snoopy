@@ -5,5 +5,8 @@ app = Flask(__name__)
 def info():
     return jsonify(status="Alive!")
 
-if __name__ == "__main__":
+def start_server():
     app.run(host="0.0.0.0")
+
+if __name__ == "__main__":
+	start_server()

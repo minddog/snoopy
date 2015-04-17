@@ -18,5 +18,8 @@ setup(
     keywords = "house sleepy snoopy better-than-the-flintstones",
     setup_requires=['nose>=1.0', 'Flask>=0.10.1'],
     packages=['snoopy', 'tests'],
+	entry_points = {
+		'console_scripts': ['snoopyd=snoopy.server:start_server'],
+    },
     long_description=read('README')
 )
