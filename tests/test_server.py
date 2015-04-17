@@ -1,11 +1,17 @@
 from nose import with_setup
+from snoopy import server
+import unittest
+import json
 
-def setup_func():
-    pass
+class SnoopyServerTestCase(unittest.TestCase):
+	def setUp(self):
+		server.app.config['TESTING'] = True
+		self.app = server.app.test_client()
 
-def teardown_func():
-    pass
+	def tearDown(self):
+		pass
 
-@with_setup(setup_func, teardown_func)
-def test_server():
-    assert True
+	def test_info(self):
+		response = self.app.get("/info")
+		assert response.status_code == 200
+		assert json.loads(response.data)['status'] == 'Alive!'
