@@ -2,12 +2,12 @@ machine:
   services:
     - docker
 
-dependencies:
+test:
   override:
+    - nosetests --with-xunit --xunit-file=$CIRCLE_TEST_REPORTS/`date -j  +'%Y-%M-%d-%H:%M:%S'`_xunit.xml
+
+  post:
     - docker info
     - docker build -t snoopy .
-
-test:
-  post:
     - docker run -d -p 5000:5000 snoopy
     - curl --retry 10 --retry-delay 5 -v http://localhost:5000/info
