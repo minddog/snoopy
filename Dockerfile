@@ -9,6 +9,7 @@ COPY . /data
 RUN cd /data 
 RUN sudo pip install virtualenv
 RUN virtualenv /data/.venv
-RUN source venv/bin/activate; python setup.py install
+RUN /data/.venv/bin/pip install -r requirements.txt
+RUN /data/.venv/bin/python setup.py install 
 EXPOSE  5000
-CMD ["python", "server.py"]
+CMD ["/data/.venv/bin/python", "server.py"]
