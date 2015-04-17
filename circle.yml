@@ -4,7 +4,7 @@ machine:
 
 test:
   override:
-    - nosetests --with-xunit --xunit-file=$CIRCLE_TEST_REPORTS/`date -j  +'%Y-%M-%d-%H:%M:%S'`_xunit.xml
+    - nosetests --with-xunit --xunit-file=$CIRCLE_TEST_REPORTS/`date +'%Y-%M-%d-%H:%M:%S'`_xunit.xml
 
   post:
     - docker info
