@@ -22,7 +22,7 @@ How it works?
  You are Zendesk, and you need to allow third-party application developers access to your event data on customer support tickets. You write the following code to enable third-party access to an existing stream.
 
  [code snippet]
-    from snoopy import pub
+	from snoopy import pub
 	from flask import Flask, jsonify
 	app = Flask(__name__)
 
