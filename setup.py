@@ -16,7 +16,7 @@ setup(
     description = ("Snoopy sleeps on his house."),
     license = "Mine",
     keywords = "house sleepy snoopy better-than-the-flintstones",
-    setup_requires=['nose>=1.0', 'Flask>=0.10.1', 'kafka-python==0.9.3'. 'gevent', 'avro=1.7.7'],
+    setup_requires=['nose>=1.0', 'Flask>=0.10.1', 'kafka-python==0.9.3', 'gevent', 'avro=1.7.7'],
     packages=['snoopy', 'tests'],
 	entry_points = {
 		'console_scripts': ['snoopyd=snoopy.server:start_server'],
