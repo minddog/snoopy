@@ -37,4 +37,18 @@ How it works?
 		return jsonify(stream_info)
  [/code snippet]
 
+Log all events
+ [code snippet]
+    from snoopy import pub
 
+    topic = 'topic1'
+    payload = {
+        'key': 'symptom',
+        'value': 'fever',
+    }
+    pub.send(topic, payload)
+ [/code snippet]
+
+Setting Up
+
+TBD.

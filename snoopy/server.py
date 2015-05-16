@@ -3,7 +3,6 @@ from snoopy import producer
 from snoopy import exceptions
 from snoopy.connection import ProducerConnection
 from snoopy.api import app
-from snoopy import consumer
 from snoopy import schema
 import gevent
 from gevent.wsgi import WSGIServer
