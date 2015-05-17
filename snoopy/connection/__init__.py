@@ -17,6 +17,6 @@ class ProducerConnection(object):
         self.logger.debug("Connecting to {}".format(options))
         gevent.spawn(self._connect, options)
 
-    def send(self, topic, key, value):
-        self.logger.debug("Sending Topic={}/Key={}\nValue={}".format(topic, key, value))
-        return self._send(topic, key, value)
+    def send(self, payload):
+        self.logger.debug("Sending Topic={}/Key={}\nValue={}".format(payload.topic, payload.key, payload.value))
+        return self._send(payload)

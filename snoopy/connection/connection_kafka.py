@@ -31,16 +31,16 @@ class KafkaConnection(ProducerConnection):
             self.logger.warn("Unable to connect: ", e)
             raise ProducerConnectionError(e)
 
-    def _send(self, topic, key, value):
+    def _send(self, payload):
         def _sender_handler(e):
             if type(e) is TypeError:
                 print "Type Error"
 
-        if False in map(lambda x: type(x) != unicode, (topic, key, value)):
+        if False in map(lambda x: type(x) != unicode, (payload.topic, payload.key, payload.value)):
             raise TypeError("Make sure topic, key, and value are all utf-8 encoded.")
 
         if(self.producer is None):
             raise ProducerConnectionError("Unable to connect to Producer")
 
-        _sender = gevent.spawn(self.producer.send, topic, key, value)
+        _sender = gevent.spawn(self.producer.send, payload.topic, payload.key, payload.value)
         _sender.link_exception(_sender_handler)
