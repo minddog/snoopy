@@ -1,10 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from snoopy import producer
 from snoopy import exceptions
 from snoopy.connection import ProducerConnection
 from snoopy.api import app
 from snoopy import schema
-import gevent
 from gevent.wsgi import WSGIServer
 from gevent.monkey import patch_all; patch_all()
 import argparse
