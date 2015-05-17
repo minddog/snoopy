@@ -38,7 +38,19 @@ def enqueue_event():
 
     return jsonify(status=200)
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Snoopy Daemon")
+    parser.add_argument('--producer-host', dest='producer_host', action='store')
+    parser.add_argument('--producer-type', dest='producer_type', action='store', default='kafka')
+    parser.add_argument('--producer-port', dest='producer_port', action='store')
+    args = parser.parse_args()
+    app.config.from_object('snoopy.config.DefaultConfiguration')
+    app.config.update(PRODUCER_CONFIGURATION_HOST=args.producer_host,
+                      PRODUCER_CONFIGURATION_PORT=args.producer_port,
+                      PRODUCER_CONFIGURATION_TYPE=args.producer_type)
+
 def start_server():
+    parse_args()
     app.debug = True
     http_server = WSGIServer(('0.0.0.0', 5000), app)
 
@@ -52,13 +64,4 @@ def start_server():
     http_server.serve_forever()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Snoopy Daemon")
-    parser.add_argument('--producer-host', dest='producer_host', action='store')
-    parser.add_argument('--producer-type', dest='producer_type', action='store', default='kafka')
-    parser.add_argument('--producer-port', dest='producer_port', action='store')
-    args = parser.parse_args()
-    app.config.from_object('snoopy.config.DefaultConfiguration')
-    app.config.update(PRODUCER_CONFIGURATION_HOST=args.producer_host,
-                      PRODUCER_CONFIGURATION_PORT=args.producer_port,
-                      PRODUCER_CONFIGURATION_TYPE=args.producer_type)
     start_server()
