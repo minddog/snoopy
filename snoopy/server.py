@@ -7,6 +7,7 @@ from snoopy import schema
 import gevent
 from gevent.wsgi import WSGIServer
 from gevent.monkey import patch_all; patch_all()
+import argparse
 
 @app.route("/info")
 def info():
@@ -40,8 +41,24 @@ def enqueue_event():
 def start_server():
     app.debug = True
     http_server = WSGIServer(('0.0.0.0', 5000), app)
-    app.CLIENT_CONNECTIONS['producer'] = ProducerConnection.create(app.config.get('PRODUCER_CONFIGURATION'), logger=app.logger)
+
+    options = {
+        'type': app.config.get('PRODUCER_CONFIGURATION_TYPE'),
+        'host': app.config.get('PRODUCER_CONFIGURATION_HOST'),
+        'port': app.config.get('PRODUCER_CONFIGURATION_PORT'),
+    }
+
+    app.CLIENT_CONNECTIONS['producer'] = ProducerConnection.create(options, logger=app.logger)
     http_server.serve_forever()
 
 if __name__ == "__main__":
-	start_server()
+    parser = argparse.ArgumentParser(description="Snoopy Daemon")
+    parser.add_argument('--producer-host', dest='producer_host', action='store')
+    parser.add_argument('--producer-type', dest='producer_type', action='store', default='kafka')
+    parser.add_argument('--producer-port', dest='producer_port', action='store')
+    args = parser.parse_args()
+    app.config.from_object('snoopy.config.DefaultConfiguration')
+    app.config.update(PRODUCER_CONFIGURATION_HOST=args.producer_host,
+                      PRODUCER_CONFIGURATION_PORT=args.producer_port,
+                      PRODUCER_CONFIGURATION_TYPE=args.producer_type)
+    start_server()
