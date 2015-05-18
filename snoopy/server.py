@@ -7,6 +7,7 @@ from snoopy import schema
 from gevent.wsgi import WSGIServer
 from gevent.monkey import patch_all; patch_all()
 import argparse
+import os
 
 @app.route("/info")
 def info():
@@ -39,11 +40,17 @@ def enqueue_event():
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Snoopy Daemon")
+    parser.add_argument('--use-env', dest='use_env', action='store_true', default=False)
     parser.add_argument('--producer-host', dest='producer_host', action='store')
     parser.add_argument('--producer-type', dest='producer_type', action='store', default='kafka')
     parser.add_argument('--producer-port', dest='producer_port', action='store')
     args = parser.parse_args()
     app.config.from_object('snoopy.config.DefaultConfiguration')
+
+    if args.use_env:
+        args.producer_host = os.getenv('KAFKA_PORT_9092_TCP_ADDR')
+        args.producer_port = os.getenv('KAFKA_PORT_9092_TCP_PORT')
+
     app.config.update(PRODUCER_CONFIGURATION_HOST=args.producer_host,
                       PRODUCER_CONFIGURATION_PORT=args.producer_port,
                       PRODUCER_CONFIGURATION_TYPE=args.producer_type)
