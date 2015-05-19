@@ -56,6 +56,8 @@ def parse_args():
                       PRODUCER_CONFIGURATION_TYPE=args.producer_type)
 
 def start_server():
+    # WHAT UP
+
     parse_args()
     app.debug = True
     http_server = WSGIServer(('0.0.0.0', 5000), app)
